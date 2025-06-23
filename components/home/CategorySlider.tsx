@@ -25,7 +25,7 @@ export default function CategorySlider() {
                         className={`snap-start w-28 h-28 ${bg} rounded-xl flex-shrink-0 flex flex-col items-center justify-center text-sm text-gray-800
               transition-transform transform hover:scale-105 active:scale-95 duration-200 ease-in-out`}
                     >
-                        <img src={icon} alt={name} className="w-8 h-8 mb-2" />
+                        <img src={icon} alt={name} className="w-8 h-8 mb-3" />
                         <span className="text-center leading-tight">{name}</span>
                     </Link>
                 ))}
