@@ -10,10 +10,17 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@reduxjs/toolkit": "^2.8.2",
+    "axios": "^1.10.0",
+    "formik": "^2.4.6",
+    "framer-motion": "^12.19.1",
     "next": "15.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-scrollbar-hide": "^4.0.0"
+    "react-hot-toast": "^2.5.2",
+    "react-redux": "^9.2.0",
+    "tailwind-scrollbar-hide": "^4.0.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
