@@ -27,7 +27,7 @@ interface TransferState {
         };
         cacheKey?: string;
     };
-    results: any[];
+    results: any;
     loading: boolean;
 }
 
@@ -47,7 +47,7 @@ const initialState: TransferState = {
         filter: {},
         cacheKey: undefined,
     },
-    results: [],
+    results: {},
     loading: false,
 };
 
@@ -56,18 +56,20 @@ export const fetchTransfers = createAsyncThunk(
     'transfer/fetchTransfers',
     async (_, { getState, rejectWithValue }) => {
         const state = getState() as { transfer: TransferState };
-        const { page, perPage, filter, sortBy, cacheKey } = state.transfer.request;
-        const body = { page, perPage, filter, sortBy, cacheKey };
+        const { filter, sortBy, cacheKey, ...rest } = state.transfer.request;
+        // const body = { page, perPage, filter, sortBy, cacheKey };
 
         try {
-            console.log(body);
+            console.log(rest);
 
             // const res = await search(body);
-            // const res = await api.post('/transfers/search', { body });
-            // return res;
+            const res = await api.post('/transfers/search', rest);
+            return res;
         } catch (err: any) {
             const msg = err?.response?.data?.message || 'Transfer search failed';
-            toast.error(msg);
+            toast.error(msg, {
+                className: 'w-full'
+            });
             return rejectWithValue(msg);
         }
     }
@@ -106,10 +108,12 @@ const transferSlice = createSlice({
                 end_time_time: '',
                 page: 1,
                 perPage: 5,
+                sortBy: undefined,
                 filter: {},
+                cacheKey: undefined,
             };
-            state.results = [];
-            state.request.cacheKey = undefined;
+            state.results = {};
+            // state.request.cacheKey = undefined;
         },
     },
     extraReducers: builder => {
@@ -119,9 +123,11 @@ const transferSlice = createSlice({
             })
             .addCase(fetchTransfers.fulfilled, (state, action: PayloadAction<any>) => {
                 state.loading = false;
-                state.results.push(...action.payload.data);
-                if (action.payload.cacheKey) {
-                    state.request.cacheKey = action.payload.cacheKey;
+                state.request.cacheKey = action.payload.cacheKey;
+                if (state.results.vehicles) {
+                    state.results.vehicles = [...state.results.vehicles, action.payload.data.vehicles];
+                } else {
+                    state.results = action.payload.data;
                 }
             })
             .addCase(fetchTransfers.rejected, state => {

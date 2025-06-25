@@ -13,8 +13,8 @@ export default function Home() {
         </div>
         <Image className="size-15 shrink-0" src="/avatar.jpg" alt="avatar" width={50} height={50} />
       </div>
-      <CategorySlider/>
-      <DestinationSlider/>
+      <CategorySlider />
+      <DestinationSlider />
       <BottomNav />
     </>
   );

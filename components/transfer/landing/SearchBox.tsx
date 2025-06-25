@@ -10,8 +10,10 @@ import {
     fetchTransfers,
 } from '@/lib/store/transferSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 export default function SearchBox() {
+    const router = useRouter();
     const { searchTransfer } = useTransferSearch();
     const dispatch = useDispatch<AppDispatch>();
     const request = useSelector((state: RootState) => state.transfer.request);
@@ -47,7 +49,8 @@ export default function SearchBox() {
                 dispatch(updateRequestField({ key: 'end_time_date', value: values.end_time_date }));
                 dispatch(updateRequestField({ key: 'end_time_time', value: values.end_time_time }));
             }
-            await dispatch(fetchTransfers());
+             dispatch(fetchTransfers());
+            router.push('/transfer/list');
         },
         enableReinitialize: true,
     });

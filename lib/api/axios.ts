@@ -1,10 +1,10 @@
 // lib/api/axios.ts
 import axios from 'axios';
 import { getToken, removeToken } from '../utils/token';
-import { API_BASE_URL } from '../constants/config';
+import { API_BASE_URL, LOCAL_API_BASE_URL } from '../constants/config';
 
 const api = axios.create({
-    baseURL: API_BASE_URL, // defined in .env.local
+    baseURL: LOCAL_API_BASE_URL, // defined in .env.local
     timeout: 10000,
 });
 
