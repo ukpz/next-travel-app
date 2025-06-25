@@ -5,8 +5,34 @@ import { search } from '@/lib/api/transfer';
 import toast from 'react-hot-toast';
 import api from '../api/axios';
 
+interface Filter {
+    class?: string[];
+    [key: string]: any;
+}
 
-const initialState = {
+interface TransferState {
+    request: {
+        start_point: string;
+        end_point: string;
+        start_time_date: string;
+        start_time_time: string;
+        trip_type: 'oneway' | 'roundtrip';
+        end_time_date?: string;
+        end_time_time?: string;
+        page: number;
+        perPage: number;
+        sortBy?: string;
+        filter?: {
+            class?: string[];
+        };
+        cacheKey?: string;
+    };
+    results: any;
+    loading: boolean;
+}
+
+
+const initialState: TransferState = {
     request: {
         start_point: '',
         end_point: '',
@@ -29,7 +55,7 @@ const initialState = {
 export const fetchTransfers = createAsyncThunk(
     'transfer/fetchTransfers',
     async (_, { getState, rejectWithValue }) => {
-        const state = getState() as { transfer };
+        const state = getState() as { transfer: TransferState };
         const { filter, sortBy, cacheKey, ...rest } = state.transfer.request;
         // const body = { page, perPage, filter, sortBy, cacheKey };
 
